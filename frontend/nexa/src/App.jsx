@@ -1,10 +1,11 @@
 import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
-    <>
-      <h1>Nexa</h1>
-    </>
+    <main className="bg-black h-screen">
+      <Navbar />
+    </main>
   );
 }
 
