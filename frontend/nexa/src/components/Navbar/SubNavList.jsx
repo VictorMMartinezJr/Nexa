@@ -1,5 +1,3 @@
-import { TfiAngleRight } from "react-icons/tfi";
-
 const SubNavList = ({ state, title }) => {
   return (
     <div

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu } from "react-icons/fi";
-import { TfiAngleLeft, TfiAngleRight } from "react-icons/tfi";
+import { TfiAngleLeft } from "react-icons/tfi";
 import { RiCloseFill } from "react-icons/ri";
 import SubNavList from "./SubNavList";
 import FirstListLi from "./FirstListLi";
+import DesktopHiddenNav from "./DesktopHiddenNav";
 
 const Navbar = () => {
+  // Mobile Nav States
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
   const [isFirstListActive, setIsFirstListActive] = useState(true);
   const [isNewListActive, setIsNewListActive] = useState(false);
@@ -14,6 +16,12 @@ const Navbar = () => {
   const [isKidsListActive, setIsKidsListActive] = useState(false);
   const [isBackActive, setIsBackActive] = useState(false);
   const [previousList, setPreviousList] = useState("");
+  // Desktop Nav States
+  const [isNewDesktopListActive, setIsNewDesktopListActive] = useState(false);
+  const [isMensDesktopListActive, setIsMensDesktopListActive] = useState(false);
+  const [isWomensDesktopListActive, setIsWomensDesktopListActive] =
+    useState(false);
+  const [isKidsDesktopListActive, setIsKidsDesktopListActive] = useState(false);
 
   const resetStates = () => {
     setPreviousList("");
@@ -26,13 +34,51 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl">
+    <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl relative">
       <div>Logo</div>
+      {/* Desktop Nav */}
+      <ul className="hidden md:flex md:justify-center md:items-center cursor-pointer">
+        <li
+          className="px-2"
+          onMouseEnter={() => setIsNewDesktopListActive(true)}
+          onMouseLeave={() => setIsNewDesktopListActive(false)}
+        >
+          New
+        </li>
+        <li
+          className="px-2"
+          onMouseEnter={() => setIsMensDesktopListActive(true)}
+          onMouseLeave={() => setIsMensDesktopListActive(false)}
+        >
+          Mens
+        </li>
+        <li
+          className="px-2"
+          onMouseEnter={() => setIsWomensDesktopListActive(true)}
+          onMouseLeave={() => setIsWomensDesktopListActive(false)}
+        >
+          Womens
+        </li>
+        <li
+          className="px-2"
+          onMouseEnter={() => setIsKidsDesktopListActive(true)}
+          onMouseLeave={() => setIsKidsDesktopListActive(false)}
+        >
+          Kids
+        </li>
+      </ul>
+
+      <DesktopHiddenNav category="New" state={isNewDesktopListActive} />
+      <DesktopHiddenNav category="Mens" state={isMensDesktopListActive} />
+      <DesktopHiddenNav category="Womens" state={isWomensDesktopListActive} />
+      <DesktopHiddenNav category="Kids" state={isKidsDesktopListActive} />
+
       <div className="flex gap-4 cursor-pointer">
         <FiSearch />
         <FiUser />
         <FiShoppingCart />
         <FiMenu
+          className="md:hidden"
           onClick={() => {
             setIsMobileNavActive(true);
             resetStates();
@@ -44,11 +90,11 @@ const Navbar = () => {
       <ul
         className={`flex flex-col p-4 absolute right-0 top-0 w-[60%] h-screen bg-white transform transition-transform duration-300 ease-in-out ${
           isMobileNavActive ? "translate-x-0" : "translate-x-full"
-        }`}
+        } md:hidden`}
       >
         <div className="flex justify-between items-center w-full">
           <button
-            className={`flex justify-center items-center gap-2 text-xl ${
+            className={`flex justify-center items-center gap-2 text-xl cursor-pointer ${
               isBackActive ? "visible" : "invisible"
             }`}
             onClick={() => {
@@ -59,7 +105,7 @@ const Navbar = () => {
             <p>{previousList}</p>
           </button>
           <button onClick={() => setIsMobileNavActive(false)}>
-            <RiCloseFill className="self-end text-3xl" />
+            <RiCloseFill className="self-end text-3xl cursor-pointer" />
           </button>
         </div>
 
