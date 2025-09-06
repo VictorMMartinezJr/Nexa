@@ -1,7 +1,7 @@
 const SubNavList = ({ state, title }) => {
   return (
     <div
-      className={`flex flex-col gap-8 mt-8 text-gray-500 cursoer-pointer transform transition-all duration-300 ease-in-out ${
+      className={`flex flex-col gap-8 mt-8 text-gray-500 cursor-pointer transform transition-all duration-300 ease-in-out ${
         state ? "block pointer-events-auto" : "hidden pointer-events-none"
       }`}
     >

@@ -5,6 +5,7 @@ import { RiCloseFill } from "react-icons/ri";
 import SubNavList from "./SubNavList";
 import FirstListLi from "./FirstListLi";
 import DesktopHiddenNav from "./DesktopHiddenNav";
+import SearchbarContainer from "./SearchBarContainer";
 
 const Navbar = () => {
   // Mobile Nav States
@@ -22,6 +23,8 @@ const Navbar = () => {
   const [isWomensDesktopListActive, setIsWomensDesktopListActive] =
     useState(false);
   const [isKidsDesktopListActive, setIsKidsDesktopListActive] = useState(false);
+  // Searchbar State
+  const [isSearchbarActive, setIsSearchbarActive] = useState(false);
 
   const resetStates = () => {
     setPreviousList("");
@@ -34,10 +37,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl relative">
+    <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl relative 2xl:px-8">
       <div>Logo</div>
       {/* Desktop Nav */}
-      <ul className="hidden md:flex md:justify-center md:items-center cursor-pointer">
+      <ul className="hidden lg:flex lg:justify-center lg:items-center cursor-pointer">
         <li
           className="px-2"
           onMouseEnter={() => setIsNewDesktopListActive(true)}
@@ -73,12 +76,18 @@ const Navbar = () => {
       <DesktopHiddenNav category="Womens" state={isWomensDesktopListActive} />
       <DesktopHiddenNav category="Kids" state={isKidsDesktopListActive} />
 
+      {/* Searchbar */}
+      <SearchbarContainer
+        state={isSearchbarActive}
+        setState={setIsSearchbarActive}
+      />
+
       <div className="flex gap-4 cursor-pointer">
-        <FiSearch />
+        <FiSearch onClick={() => setIsSearchbarActive(true)} />
         <FiUser />
         <FiShoppingCart />
         <FiMenu
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => {
             setIsMobileNavActive(true);
             resetStates();
@@ -90,7 +99,7 @@ const Navbar = () => {
       <ul
         className={`flex flex-col p-4 absolute right-0 top-0 w-[60%] h-screen bg-white transform transition-transform duration-300 ease-in-out ${
           isMobileNavActive ? "translate-x-0" : "translate-x-full"
-        } md:hidden`}
+        } md:w-[30%] lg:hidden`}
       >
         <div className="flex justify-between items-center w-full">
           <button
