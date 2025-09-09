@@ -6,6 +6,7 @@ import SubNavList from "./SubNavList";
 import FirstListLi from "./FirstListLi";
 import DesktopHiddenNav from "./DesktopHiddenNav";
 import SearchbarContainer from "./SearchBarContainer";
+import logo from "../../assets/logo.svg";
 
 const Navbar = () => {
   // Mobile Nav States
@@ -26,7 +27,7 @@ const Navbar = () => {
   // Searchbar State
   const [isSearchbarActive, setIsSearchbarActive] = useState(false);
 
-  const resetStates = () => {
+  const resetMobileStates = () => {
     setPreviousList("");
     setIsFirstListActive(true);
     setIsNewListActive(false);
@@ -36,45 +37,78 @@ const Navbar = () => {
     setIsBackActive(false);
   };
 
+  const resetDesktopStates = () => {
+    setIsNewDesktopListActive(false);
+    setIsMensDesktopListActive(false);
+    setIsWomensDesktopListActive(false);
+    setIsKidsDesktopListActive(false);
+  };
+
+  const changeDesktopListState = (stateSetter) => {
+    setIsNewDesktopListActive(false);
+    setIsMensDesktopListActive(false);
+    setIsWomensDesktopListActive(false);
+    setIsKidsDesktopListActive(false);
+    stateSetter(true);
+  };
+
   return (
-    <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl relative 2xl:px-8">
-      <div>Logo</div>
+    <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl relative z-10 2xl:px-8">
+      <img src={logo} className="w-12 h-12" />
       {/* Desktop Nav */}
       <ul className="hidden lg:flex lg:justify-center lg:items-center cursor-pointer">
         <li
           className="px-2"
-          onMouseEnter={() => setIsNewDesktopListActive(true)}
-          onMouseLeave={() => setIsNewDesktopListActive(false)}
+          onMouseEnter={() => changeDesktopListState(setIsNewDesktopListActive)}
         >
           New
         </li>
         <li
           className="px-2"
-          onMouseEnter={() => setIsMensDesktopListActive(true)}
-          onMouseLeave={() => setIsMensDesktopListActive(false)}
+          onMouseEnter={() =>
+            changeDesktopListState(setIsMensDesktopListActive)
+          }
         >
           Mens
         </li>
         <li
           className="px-2"
-          onMouseEnter={() => setIsWomensDesktopListActive(true)}
-          onMouseLeave={() => setIsWomensDesktopListActive(false)}
+          onMouseEnter={() =>
+            changeDesktopListState(setIsWomensDesktopListActive)
+          }
         >
           Womens
         </li>
         <li
           className="px-2"
-          onMouseEnter={() => setIsKidsDesktopListActive(true)}
-          onMouseLeave={() => setIsKidsDesktopListActive(false)}
+          onMouseEnter={() =>
+            changeDesktopListState(setIsKidsDesktopListActive)
+          }
         >
           Kids
         </li>
       </ul>
 
-      <DesktopHiddenNav category="New" state={isNewDesktopListActive} />
-      <DesktopHiddenNav category="Mens" state={isMensDesktopListActive} />
-      <DesktopHiddenNav category="Womens" state={isWomensDesktopListActive} />
-      <DesktopHiddenNav category="Kids" state={isKidsDesktopListActive} />
+      <DesktopHiddenNav
+        category="New"
+        state={isNewDesktopListActive}
+        resetStates={resetDesktopStates}
+      />
+      <DesktopHiddenNav
+        category="Mens"
+        state={isMensDesktopListActive}
+        resetStates={resetDesktopStates}
+      />
+      <DesktopHiddenNav
+        category="Womens"
+        state={isWomensDesktopListActive}
+        resetStates={resetDesktopStates}
+      />
+      <DesktopHiddenNav
+        category="Kids"
+        state={isKidsDesktopListActive}
+        resetStates={resetDesktopStates}
+      />
 
       {/* Searchbar */}
       <SearchbarContainer
@@ -90,7 +124,7 @@ const Navbar = () => {
           className="lg:hidden"
           onClick={() => {
             setIsMobileNavActive(true);
-            resetStates();
+            resetMobileStates();
           }}
         />
       </div>
@@ -107,7 +141,7 @@ const Navbar = () => {
               isBackActive ? "visible" : "invisible"
             }`}
             onClick={() => {
-              resetStates();
+              resetMobileStates();
             }}
           >
             <TfiAngleLeft />
