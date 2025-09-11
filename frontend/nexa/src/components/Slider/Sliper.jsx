@@ -61,9 +61,9 @@ const Slider = () => {
       </div>
 
       {/* Desktop Images */}
-      <div className="hidden lg:flex lg:justify-between lg:w-full lg:h-[80vh] lg:bg-white lg:px-4 lg:py-8 lg:gap-2 3xl:gap-0">
+      <div className="hidden lg:grid lg:grid-cols-3 lg:w-full lg:h-[80vh] lg:bg-white lg:px-4 lg:py-8 lg:gap-2">
         {/* Image 1 */}
-        <button className="relative flex flex-col justify-center items-start cursor-pointer whitespace-nowrap">
+        <button className="relative cursor-pointer whitespace-nowrap">
           <img
             src={shopBasketball}
             alt="Shop basketball"
@@ -74,7 +74,7 @@ const Slider = () => {
           </p>
         </button>
         {/* Image 2 */}
-        <button className="relative flex flex-col justify-center items-start cursor-pointer whitespace-nowrap">
+        <button className="relative flex-1/3 cursor-pointer whitespace-nowrap">
           <img
             src={shopRunning}
             alt="Shop running"
@@ -85,7 +85,7 @@ const Slider = () => {
           </p>
         </button>
         {/* Image 3 */}
-        <button className="relative flex flex-col justify-center items-start cursor-pointer whitespace-nowrap">
+        <button className="relative cursor-pointer whitespace-nowrap">
           <img
             src={shopAccessories}
             alt="Shop accessories"
