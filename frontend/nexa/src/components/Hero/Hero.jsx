@@ -10,6 +10,7 @@ const Hero = () => {
           muted
           loop
           playsInline
+          aria-label="Video showing a soccer ball being kicked into a goal"
         >
           <source src={soccer} type="video/mp4" />
         </video>
@@ -20,7 +21,7 @@ const Hero = () => {
             CHASE THE GOAL
           </p>
           <p className="md:text-lg">Shop 2026 World Cup Collection</p>
-          <button className="bg-white text-black px-2.5 py-1 rounded-2xl cursor-pointer sm:px-4 lg:px-6">
+          <button className="bg-white text-black px-4 py-1.5 rounded-2xl cursor-pointer lg:px-6">
             Shop
           </button>
         </div>
