@@ -7,6 +7,7 @@ import FirstListLi from "./FirstListLi";
 import DesktopHiddenNav from "./DesktopHiddenNav";
 import SearchbarContainer from "./SearchBarContainer";
 import logo from "../../assets/logo.svg";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   // Mobile Nav States
@@ -116,6 +117,7 @@ const Navbar = () => {
         setState={setIsSearchbarActive}
       />
 
+      {/* Icons */}
       <div className="flex gap-4 cursor-pointer">
         <FiSearch onClick={() => setIsSearchbarActive(true)} />
         <FiUser />

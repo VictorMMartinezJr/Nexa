@@ -1,16 +1,17 @@
 import "./App.css";
-import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
-import QuickLinks from "./components/QuckLinks/QuickLinks";
-import Slider from "./components/Slider/Sliper";
+import Home from "./components/pages/Home";
+import { Routes, Route } from "react-router-dom";
+import Products from "./components/pages/Products";
 
 function App() {
   return (
-    <main id="main" className="bg-black h-screen">
+    <main id="main" className="bg-white h-screen">
       <Navbar />
-      <Hero />
-      <QuickLinks />
-      <Slider />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+      </Routes>
     </main>
   );
 }
