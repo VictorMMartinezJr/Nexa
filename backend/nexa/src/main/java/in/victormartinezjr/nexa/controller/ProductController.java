@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class ProductController {
 
@@ -20,8 +21,8 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getProducts() {
-        return productService.getAllProducts();
+    public List<Product> getProducts(@RequestParam(required = false) String audience, @RequestParam(required = false) String category, @RequestParam(required = false) String sort) {
+        return productService.getFilteredProducts(audience, category, sort);
     }
 
     // Post Mappings

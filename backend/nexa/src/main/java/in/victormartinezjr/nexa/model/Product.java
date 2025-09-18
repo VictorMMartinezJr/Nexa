@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,14 +19,18 @@ public class Product {
     private BigDecimal price;
     private String description;
     private String category;
-
-    @ElementCollection
-    private List<String> details;
+    private String audience;
 
     private boolean hasS;
     private boolean hasM;
     private boolean hasL;
     private boolean hasXL;
     private boolean hasXXL;
-    private boolean hasXXXL;
+    private boolean has6;
+    private boolean has7;
+    private boolean has8;
+    private boolean has9;
+    private boolean has10;
+    private boolean has11;
+    private boolean has12;
 }
