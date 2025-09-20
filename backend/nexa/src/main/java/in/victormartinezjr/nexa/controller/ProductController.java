@@ -21,8 +21,8 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getProducts(@RequestParam(required = false) String audience, @RequestParam(required = false) String category, @RequestParam(required = false) String sort) {
-        return productService.getFilteredProducts(audience, category, sort);
+    public List<Product> getProducts(@RequestParam(required = false) String sort, @RequestParam(required = false) String audience, @RequestParam(required = false) String category) {
+        return productService.getFilteredProducts(sort, audience, category);
     }
 
     // Post Mappings
