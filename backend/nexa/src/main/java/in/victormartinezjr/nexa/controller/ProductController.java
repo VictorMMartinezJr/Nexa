@@ -15,17 +15,18 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
-    public String greet() {
-        return "Greetings from Spring Boot!";
-    }
-
+    // Get mappings
     @GetMapping("/products")
     public List<Product> getProducts(@RequestParam(required = false) String sort, @RequestParam(required = false) String audience, @RequestParam(required = false) String category) {
         return productService.getFilteredProducts(sort, audience, category);
     }
 
-    // Post Mappings
+    @GetMapping("/product/{id}")
+    public Product getProduct(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
+
+    // Post mappings
     @PostMapping("/products")
     public Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
