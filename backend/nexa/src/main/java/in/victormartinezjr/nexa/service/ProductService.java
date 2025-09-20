@@ -25,14 +25,18 @@ public class ProductService {
     public List<Product> getFilteredProducts(String sort, String audience, String category) {
         List<Product> products = productRepo.findAll();
 
+        System.out.println("Audience: " + audience + ", Category: " + category);
+        products.forEach(p -> System.out.println(p.getName() + " | " + p.getCategory() + " | " + p.getAudience()));
+
+
         // Filter by (mens, womens, kids)
-        if (audience != null && audience.isBlank()) {
-            products = products.stream().filter(product -> product.getAudience().contains(audience)).toList();
+        if (audience != null && !audience.isBlank()) {
+            products = products.stream().filter(product -> product.getAudience() != null && product.getAudience().equalsIgnoreCase(audience)).toList();
         }
 
         // Filter by category (hoodies, bottoms, etc)
-        if (category != null && category.isBlank()) {
-            products = products.stream().filter(product -> product.getCategory().contains(category)).toList();
+        if (category != null && !category.isBlank()) {
+            products = products.stream().filter(product -> product.getCategory() != null && product.getCategory().toLowerCase().contains(category.toLowerCase())).toList();
         }
 
         // Sort by price
