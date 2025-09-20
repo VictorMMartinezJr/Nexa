@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductGrid from "../ProductGrid";
 import FilterSlider from "../Slider/FilterSlider";
 import { IoOptionsOutline } from "react-icons/io5";
 import { RiCloseFill } from "react-icons/ri";
+import axios from "axios";
+import { AppContext } from "../../context/AppContext";
 
 const Products = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedSizes, setSelectedSizes] = useState([]);
-  const [sortOption, setSortOption] = useState("");
+
+  const {
+    products,
+    sortOption,
+    setSortOption,
+    category,
+    audience,
+    fetchProducts,
+  } = useContext(AppContext);
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
@@ -23,7 +33,6 @@ const Products = () => {
 
   const handleSubmit = () => {
     setShowFilters(false);
-    // Here you would typically also apply the filters to your product list
   };
 
   const resetFilters = () => {
@@ -31,17 +40,28 @@ const Products = () => {
     setSortOption("");
   };
 
+  useEffect(() => {
+    fetchProducts(
+      "http://localhost:8080/api/products",
+      sortOption,
+      audience,
+      category
+    );
+  }, [sortOption, audience, category]);
+
   return (
     <div className="lg:px-4 2xl:px-8">
-      <h2 className="pt-8 px-4 lg:px-0 lg:hidden">Mens Clothing</h2>
+      <h2 className="pt-8 px-4 lg:px-0 lg:hidden">Clothing</h2>
 
       {/* Category slider */}
       <FilterSlider />
 
       {/* Result # and filter button */}
       <div className="w-full flex justify-between items-center py-4 px-4 lg:px-0">
-        <p className="lg:hidden">100 Results</p>
-        <p className="hidden lg:block lg:text-2xl">Men's Clothing (100)</p>
+        <p className="lg:hidden">{products.length} Results</p>
+        <p className="hidden lg:block lg:text-2xl">
+          Men's Clothing ({products.length})
+        </p>
 
         {/* Buttons */}
         <div className="flex justify-center items-center gap-4">
@@ -219,28 +239,20 @@ const Products = () => {
               >
                 Clear Filters
               </button>
-              <button
-                className="bg-black text-white px-3 py-2 rounded-full cursor-pointer"
-                onClick={handleSubmit}
-              >
-                Apply Filters
-              </button>
             </div>
           </div>
         )}
 
         {/* Products grid */}
         <div className="flex-1 grid grid-cols-2 gap-2 lg:grid-cols-3">
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
-          <ProductGrid />
+          {products.map((p) => (
+            <ProductGrid
+              key={p.id}
+              name={p.name}
+              category={p.category}
+              price={p.price}
+            />
+          ))}
         </div>
       </div>
     </div>
