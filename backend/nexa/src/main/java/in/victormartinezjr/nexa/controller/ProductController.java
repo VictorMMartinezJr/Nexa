@@ -3,6 +3,8 @@ package in.victormartinezjr.nexa.controller;
 import in.victormartinezjr.nexa.model.Product;
 import in.victormartinezjr.nexa.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +19,30 @@ public class ProductController {
 
     // Get mappings
     @GetMapping("/products")
-    public List<Product> getProducts(@RequestParam(required = false) String sort, @RequestParam(required = false) String audience, @RequestParam(required = false) String category) {
-        return productService.getFilteredProducts(sort, audience, category);
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) String sort, @RequestParam(required = false) String audience, @RequestParam(required = false) String category) {
+        return new ResponseEntity<>(productService.getFilteredProducts(sort, audience, category), HttpStatus.OK);
     }
 
     @GetMapping("/product/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+
+        if (product != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Post mappings
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        Product newProduct = productService.addProduct(product);
+
+        if (newProduct != null) {
+            return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
