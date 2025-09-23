@@ -52,4 +52,8 @@ public class ProductService {
     public Product getProductById(Long id) {
         return productRepo.findById(id).orElse(null);
     }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepo.searchProducts(keyword);
+    }
 }
