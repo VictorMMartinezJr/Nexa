@@ -1,6 +1,10 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Product = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [shoesActive, setShoesActive] = useState(true);
   const [selectedApparelSize, setSelectedApparelSize] = useState("");
   const [selectedShoeSize, setSelectedShoeSize] = useState(-1);
@@ -10,6 +14,20 @@ const Product = () => {
 
   const addToBag = () => {};
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const response = await axios.get(
+        `http://localhost:8080/api/product/${id}`
+      );
+      const data = response.data;
+      setProduct(data);
+
+      console.log(data);
+    };
+
+    fetchProduct();
+  }, [id]);
+
   return (
     <>
       {/* Mobile */}
@@ -17,9 +35,9 @@ const Product = () => {
         <div className="flex-1 overflow-y-auto pb-8">
           {/* Item text */}
           <div className="flex flex-col justify-center w-full flex-1 p-8">
-            <h1 className="text-xl">Giannis Freak 7 "Spotlight"</h1>
-            <h2 className="text-gray-500 text-lg">Basketball Shoes</h2>
-            <h3 className="pt-2 text-xl">$115</h3>
+            <h1 className="text-xl">{product?.name}</h1>
+            <h2 className="text-gray-500 text-lg">{product?.category}</h2>
+            <h3 className="pt-2 text-xl">${product?.price}</h3>
           </div>
 
           {/* Item image */}

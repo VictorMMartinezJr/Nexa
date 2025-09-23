@@ -5,6 +5,7 @@ export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
   const [products, setProducts] = useState([]);
+  const [searchedProducts, setSearchedProducts] = useState([]);
   const [sortOption, setSortOption] = useState(null);
   const [audience, setAudience] = useState(null);
   const [category, setCategory] = useState(null);
@@ -27,6 +28,8 @@ export const AppContextProvider = (props) => {
   const contextValue = {
     products,
     setProducts,
+    searchedProducts,
+    setSearchedProducts,
     sortOption,
     setSortOption,
     category,
