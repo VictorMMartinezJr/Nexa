@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse createUser(UserRequest request) {
         User newUser = convertToUser(request);
-        // Make sure email doesn't exist
+        // Make sure email doesn't exist already
         if (!userRepo.existsByEmail(newUser.getEmail())) {
             newUser = userRepo.save(newUser);
             return convertToUserResponse(newUser);

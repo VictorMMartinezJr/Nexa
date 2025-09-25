@@ -2,8 +2,8 @@ package in.victormartinezjr.nexa.controller;
 
 import in.victormartinezjr.nexa.io.UserRequest;
 import in.victormartinezjr.nexa.io.UserResponse;
-import in.victormartinezjr.nexa.model.User;
 import in.victormartinezjr.nexa.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody UserRequest request) {
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody UserRequest request) {
         UserResponse newUser = userService.createUser(request);
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
