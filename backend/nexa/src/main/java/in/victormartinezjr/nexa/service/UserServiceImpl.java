@@ -2,7 +2,7 @@ package in.victormartinezjr.nexa.service;
 
 import in.victormartinezjr.nexa.io.UserRequest;
 import in.victormartinezjr.nexa.io.UserResponse;
-import in.victormartinezjr.nexa.model.User;
+import in.victormartinezjr.nexa.model.UserModel;
 import in.victormartinezjr.nexa.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createUser(UserRequest request) {
-        User newUser = convertToUser(request);
+        UserModel newUser = convertToUser(request);
         // Make sure email doesn't exist already
         if (!userRepo.existsByEmail(newUser.getEmail())) {
             newUser = userRepo.save(newUser);
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
        throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
     }
 
-    private UserResponse convertToUserResponse(User newUser) {
+    private UserResponse convertToUserResponse(UserModel newUser) {
         return UserResponse.builder()
                 .userId(newUser.getUserId())
                 .name(newUser.getName())
@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    private User convertToUser(UserRequest request) {
-        return User.builder()
+    private UserModel convertToUser(UserRequest request) {
+        return UserModel.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
