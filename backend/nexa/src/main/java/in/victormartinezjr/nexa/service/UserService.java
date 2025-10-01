@@ -5,4 +5,6 @@ import in.victormartinezjr.nexa.io.UserResponse;
 
 public interface UserService {
     UserResponse createUser(UserRequest request);
+
+    UserResponse getUserAccount(String email);
 }
