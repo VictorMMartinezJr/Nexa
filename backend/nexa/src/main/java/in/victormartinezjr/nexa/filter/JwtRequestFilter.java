@@ -21,9 +21,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
-    private final AppUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
-
     private static final List<String> PUBLIC_URLS = List.of("/api/", "/api/products", "/api/product/**", "/api/login", "/api/logout", "/api/register");
     private final AppUserDetailsService appUserDetailsService;
 
