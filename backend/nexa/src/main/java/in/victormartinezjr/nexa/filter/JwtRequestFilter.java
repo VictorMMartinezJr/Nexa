@@ -29,7 +29,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
 
-        if (PUBLIC_URLS.contains(path)) {
+        boolean isPublic = PUBLIC_URLS.stream().anyMatch(p -> {
+            if (p.endsWith("/**")) {
+                // wildcard support
+                String base = p.substring(0, p.length() - 3);
+                return path.startsWith(base);
+            } else {
+                return path.equals(p);
+            }
+        });
+
+        if (isPublic) {
             filterChain.doFilter(request, response);
             return;
         }
