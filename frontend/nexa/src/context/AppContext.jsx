@@ -9,6 +9,8 @@ export const AppContextProvider = (props) => {
   const [sortOption, setSortOption] = useState(null);
   const [audience, setAudience] = useState(null);
   const [category, setCategory] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const fetchProducts = async (url, sortOption, audience, category) => {
     try {
@@ -37,6 +39,10 @@ export const AppContextProvider = (props) => {
     audience,
     setAudience,
     fetchProducts,
+    isLoggedIn,
+    setIsLoggedIn,
+    userData,
+    setUserData,
   };
 
   return (
