@@ -11,7 +11,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setIsLoggedIn } = useContext(AppContext);
+  const { isLoggedIn, setIsLoggedIn, getUserAccount, setUserData } =
+    useContext(AppContext);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -38,7 +39,7 @@ const Login = () => {
           toast.error("Email already exists.");
         }
       } else {
-        //     // Login api call
+        // Login api call
         const response = await axios.post(
           "http://localhost:8080/api/login",
           {
@@ -50,6 +51,7 @@ const Login = () => {
 
         if (response.status === 200) {
           setIsLoggedIn(true);
+          await getUserAccount();
           navigate("/");
           toast.success(`Welcome Back!`);
         }
@@ -62,6 +64,23 @@ const Login = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleLogout = async (e) => {
+    axios.defaults.withCredentials = true;
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8080/api/logout");
+
+      if (response.status === 200) {
+        setIsLoggedIn(false);
+        setUserData(null);
+        navigate("/");
+        toast.success("Logged out successfully.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -79,12 +98,19 @@ const Login = () => {
               exit={{ scale: 0 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             >
-              {isCreateAccount ? "Create Account" : "Login"}
+              {isLoggedIn
+                ? "Logout?"
+                : isCreateAccount
+                ? "Create Account"
+                : "Login"}
             </motion.h2>
           </AnimatePresence>
 
           {/* Form */}
-          <form onSubmit={submitHandler} className="flex flex-col gap-5">
+          <form
+            onSubmit={isLoggedIn ? handleLogout : submitHandler}
+            className="flex flex-col gap-5"
+          >
             {/* Name only if isCreateAccount is true */}
             {isCreateAccount && (
               <div className="flex ">
@@ -99,6 +125,7 @@ const Login = () => {
                   value={name}
                   required
                   onChange={(e) => setName(e.target.value)}
+                  disabled={isLoggedIn}
                 />
               </div>
             )}
@@ -116,6 +143,7 @@ const Login = () => {
                 value={email}
                 required
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoggedIn}
               />
             </div>
 
@@ -132,55 +160,58 @@ const Login = () => {
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoggedIn}
               />
             </div>
 
-            {/* Forgot password link */}
-            {/* <div className="flex justify-content-between mb-3 lg:mb-6">
-              <Link
-                //   to="/reset-password"
-                className="text-decoration-none text-red-500"
-              >
-                Forgot Password?
-              </Link>
-            </div> */}
-
             {/* Primary button */}
-            <button
-              type="submit"
-              className="cursor-pointer bg-black text-white py-4 rounded-full w-full xl:text-xl"
-              disabled={loading}
-            >
-              {loading ? "Loading" : isCreateAccount ? "Register" : "Login"}
-            </button>
+            {isLoggedIn ? (
+              <button
+                type="submit"
+                className="cursor-pointer bg-red-600 text-white py-4 rounded-full w-full xl:text-xl"
+                disabled={loading}
+              >
+                {loading ? "Loading" : "Logout"}
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="cursor-pointer bg-black text-white py-4 rounded-full w-full xl:text-xl"
+                disabled={loading}
+              >
+                {loading ? "Loading" : isCreateAccount ? "Register" : "Login"}
+              </button>
+            )}
           </form>
 
           {/* Form footer to switch between register/login */}
-          <div className="text-center mt-3">
-            <p className="mb-0">
-              {isCreateAccount ? (
-                <>
-                  Already have an account?{" "}
-                  <span
-                    className="underline cursor-pointer"
-                    onClick={() => setIsCreateAccount(false)}
-                  >
-                    Login
-                  </span>
-                </>
-              ) : (
-                <>
-                  Don't have an account?{" "}
-                  <span
-                    className="underline cursor-pointer"
-                    onClick={() => setIsCreateAccount(true)}
-                  >
-                    Register
-                  </span>
-                </>
-              )}
-            </p>
-          </div>
+          {!isLoggedIn && (
+            <div className="text-center mt-3">
+              <p className="mb-0">
+                {isCreateAccount ? (
+                  <>
+                    Already have an account?{" "}
+                    <span
+                      className="underline cursor-pointer"
+                      onClick={() => setIsCreateAccount(false)}
+                    >
+                      Login
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    Don't have an account?{" "}
+                    <span
+                      className="underline cursor-pointer"
+                      onClick={() => setIsCreateAccount(true)}
+                    >
+                      Register
+                    </span>
+                  </>
+                )}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
