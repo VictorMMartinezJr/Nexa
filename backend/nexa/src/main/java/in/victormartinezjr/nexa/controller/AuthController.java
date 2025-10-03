@@ -4,6 +4,7 @@ import in.victormartinezjr.nexa.io.AuthRequest;
 import in.victormartinezjr.nexa.io.AuthResponse;
 import in.victormartinezjr.nexa.service.AppUserDetailsService;
 import in.victormartinezjr.nexa.util.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -57,6 +56,25 @@ public class AuthController {
             error.put("message", "Authentication Failed");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
+    }
+
+    @GetMapping("/is-authenticated")
+    public ResponseEntity<Boolean> isAuthenticated(@CurrentSecurityContext(expression = "authentication?.name") String email) {
+        return ResponseEntity.ok(email != null);
+    }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie.from("jwt", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body("Logged out successfully");
     }
 
     private void authenticate(String email, String password) {
