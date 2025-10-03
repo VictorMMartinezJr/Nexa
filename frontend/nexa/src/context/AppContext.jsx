@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 
 export const AppContext = createContext();
 
@@ -27,6 +28,21 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  const getUserAccount = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/account");
+
+      if (response.status === 200) {
+        setUserData(response.data);
+        setIsLoggedIn(true);
+      } else {
+        toast.error("Unable to retrieve account.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
   const contextValue = {
     products,
     setProducts,
@@ -43,6 +59,7 @@ export const AppContextProvider = (props) => {
     setIsLoggedIn,
     userData,
     setUserData,
+    getUserAccount,
   };
 
   return (
