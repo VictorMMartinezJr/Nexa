@@ -82,6 +82,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
+        System.out.println("Request path: " + request.getServletPath());
+        System.out.println("JWT token: " + jwt);
+        System.out.println("Authentication: " + SecurityContextHolder.getContext().getAuthentication());
+
         filterChain.doFilter(request, response);
     }
 }
