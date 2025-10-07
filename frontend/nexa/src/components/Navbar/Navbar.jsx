@@ -13,14 +13,12 @@ const Navbar = () => {
   // Mobile Nav States
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
   const [isFirstListActive, setIsFirstListActive] = useState(true);
-  const [isNewListActive, setIsNewListActive] = useState(false);
   const [isMensListActive, setIsMensListActive] = useState(false);
   const [isWomensListActive, setIsWomensListActive] = useState(false);
   const [isKidsListActive, setIsKidsListActive] = useState(false);
   const [isBackActive, setIsBackActive] = useState(false);
   const [previousList, setPreviousList] = useState("");
   // Desktop Nav States
-  const [isNewDesktopListActive, setIsNewDesktopListActive] = useState(false);
   const [isMensDesktopListActive, setIsMensDesktopListActive] = useState(false);
   const [isWomensDesktopListActive, setIsWomensDesktopListActive] =
     useState(false);
@@ -31,7 +29,6 @@ const Navbar = () => {
   const resetMobileStates = () => {
     setPreviousList("");
     setIsFirstListActive(true);
-    setIsNewListActive(false);
     setIsMensListActive(false);
     setIsWomensListActive(false);
     setIsKidsListActive(false);
@@ -39,14 +36,12 @@ const Navbar = () => {
   };
 
   const resetDesktopStates = () => {
-    setIsNewDesktopListActive(false);
     setIsMensDesktopListActive(false);
     setIsWomensDesktopListActive(false);
     setIsKidsDesktopListActive(false);
   };
 
   const changeDesktopListState = (stateSetter) => {
-    setIsNewDesktopListActive(false);
     setIsMensDesktopListActive(false);
     setIsWomensDesktopListActive(false);
     setIsKidsDesktopListActive(false);
@@ -55,15 +50,11 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between items-center bg-white w-full h-[8vh] px-4 text-2xl relative z-10 2xl:px-8">
-      <img src={logo} className="w-12 h-12" />
+      <Link to="/">
+        <img src={logo} className="w-12 h-12" />
+      </Link>
       {/* Desktop Nav */}
       <ul className="hidden lg:flex lg:justify-center lg:items-center cursor-pointer">
-        <li
-          className="px-2"
-          onMouseEnter={() => changeDesktopListState(setIsNewDesktopListActive)}
-        >
-          New
-        </li>
         <li
           className="px-2"
           onMouseEnter={() =>
@@ -90,11 +81,6 @@ const Navbar = () => {
         </li>
       </ul>
 
-      <DesktopHiddenNav
-        category="New"
-        state={isNewDesktopListActive}
-        resetStates={resetDesktopStates}
-      />
       <DesktopHiddenNav
         category="Mens"
         state={isMensDesktopListActive}
@@ -163,13 +149,6 @@ const Navbar = () => {
           }`}
         >
           <FirstListLi
-            category="New"
-            setIsFirstListActive={setIsFirstListActive}
-            currentListSetter={setIsNewListActive}
-            setIsBackActive={setIsBackActive}
-            setPreviousList={setPreviousList}
-          />
-          <FirstListLi
             category="Mens"
             setIsFirstListActive={setIsFirstListActive}
             currentListSetter={setIsMensListActive}
@@ -192,8 +171,6 @@ const Navbar = () => {
           />
         </div>
 
-        {/* New List */}
-        <SubNavList state={isNewListActive} title="New" />
         {/* Mens List */}
         <SubNavList state={isMensListActive} title="Mens" />
         {/* Womens List */}
