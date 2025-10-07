@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu } from "react-icons/fi";
 import { TfiAngleLeft } from "react-icons/tfi";
 import { RiCloseFill } from "react-icons/ri";
@@ -7,7 +7,8 @@ import FirstListLi from "./FirstListLi";
 import DesktopHiddenNav from "./DesktopHiddenNav";
 import SearchbarContainer from "./SearchBarContainer";
 import logo from "../../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 const Navbar = () => {
   // Mobile Nav States
@@ -25,6 +26,9 @@ const Navbar = () => {
   const [isKidsDesktopListActive, setIsKidsDesktopListActive] = useState(false);
   // Searchbar State
   const [isSearchbarActive, setIsSearchbarActive] = useState(false);
+  const { isLoggedIn } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   const resetMobileStates = () => {
     setPreviousList("");
@@ -106,8 +110,20 @@ const Navbar = () => {
       {/* Icons */}
       <div className="flex gap-4 cursor-pointer">
         <FiSearch onClick={() => setIsSearchbarActive(true)} />
-        <FiUser />
-        <FiShoppingCart />
+        <FiUser
+          onClick={() => {
+            navigate("/login");
+          }}
+        />
+        <FiShoppingCart
+          onClick={() => {
+            if (isLoggedIn) {
+              navigate("/cart");
+            } else {
+              navigate("/login");
+            }
+          }}
+        />
         <FiMenu
           className="lg:hidden"
           onClick={() => {
