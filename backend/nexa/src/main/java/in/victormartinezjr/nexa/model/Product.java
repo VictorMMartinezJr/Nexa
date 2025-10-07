@@ -20,6 +20,7 @@ public class Product {
     private String description;
     private String category;
     private String audience;
+    private String imageURL;
 
     private boolean hasS;
     private boolean hasM;
