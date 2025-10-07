@@ -1,6 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { use, useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import { nav } from "framer-motion/client";
+import { toast } from "react-toastify";
 
 const Product = () => {
   const { id } = useParams();
@@ -8,11 +11,47 @@ const Product = () => {
   const [shoesActive, setShoesActive] = useState(true);
   const [selectedApparelSize, setSelectedApparelSize] = useState("");
   const [selectedShoeSize, setSelectedShoeSize] = useState(-1);
+  const navigate = useNavigate();
+
+  const { isLoggedIn, getUserCart } = useContext(AppContext);
 
   const shoeSizes = [6, 7, 8, 9, 10, 11, 12];
   const apparelSizes = ["S", "M", "L", "XL", "XXL"];
 
-  const addToBag = () => {};
+  const addToCart = async (productId, quantity) => {
+    axios.defaults.withCredentials = true;
+
+    // user must be logged in to add items to cart
+    if (!isLoggedIn) {
+      navigate("/login");
+      toast.info("Please login to add items to your cart.");
+      return;
+    }
+
+    // Size must be selected
+    const size = shoesActive ? selectedShoeSize : selectedApparelSize;
+    if (!size) {
+      toast.error("Please select a size.");
+      return;
+    }
+
+    // Add item to cart
+    try {
+      const response = await axios.post("http://localhost:8080/api/cart/add", {
+        productId,
+        quantity,
+      });
+
+      if (response.status === 200) {
+        toast.success("Item added to cart.");
+        await getUserCart();
+        navigate("/cart");
+      }
+    } catch (error) {
+      toast.error("Unable to add item to cart. Please try again.");
+      console.log("Add to cart error: ", error.message);
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -21,8 +60,13 @@ const Product = () => {
       );
       const data = response.data;
       setProduct(data);
-
       console.log(data);
+
+      if (data.category.toLowerCase().includes("shoes")) {
+        setShoesActive(true);
+      } else {
+        setShoesActive(false);
+      }
     };
 
     fetchProduct();
@@ -57,8 +101,11 @@ const Product = () => {
                         selectedApparelSize == size
                           ? "border-black"
                           : "border-gray-400"
-                      } `}
+                      } ${
+                        !product[`has${size}`] ? "text-gray-500" : "text-black"
+                      }`}
                       onClick={() => setSelectedApparelSize(size)}
+                      disabled={!product[`has${size}`]}
                     >
                       {size}
                     </button>
@@ -83,21 +130,16 @@ const Product = () => {
           {/* Item description */}
           <div className="flex flex-col w-full px-4">
             <p className="text-xl">Item Description</p>
-            <p className="mt-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Architecto quae eum, alias quam doloribus placeat nulla labore vel
-              consequuntur possimus cupiditate, sequi ut autem. Ut id ipsam sit
-              voluptatum iste?
-            </p>
+            <p className="mt-4">{product?.description}</p>
           </div>
         </div>
 
         {/* Add to Bag button */}
         <button
-          onClick={addToBag}
+          onClick={() => addToCart(product.id, 1)}
           className="cursor-pointer sticky bottom-0 bg-black text-white w-full py-6 text-xl text-center"
         >
-          Add to Bag
+          Add to Cart
         </button>
       </div>
 
@@ -112,9 +154,9 @@ const Product = () => {
           <div className="flex flex-col justify-center items-center flex-1 px-4">
             {/* Item text */}
             <div className="flex flex-col justify-center w-full">
-              <h1 className="text-xl">Giannis Freak 7 "Spotlight"</h1>
-              <h2 className="text-gray-500 text-lg">Basketball Shoes</h2>
-              <h3 className="pt-2 text-xl">$115</h3>
+              <h1 className="text-xl">{product?.name}</h1>
+              <h2 className="text-gray-500 text-lg">{product?.category}</h2>
+              <h3 className="pt-2 text-xl">$ {product?.price}</h3>
             </div>
 
             {/* Sizes */}
@@ -155,19 +197,15 @@ const Product = () => {
             {/* Item description */}
             <div className="flex flex-col w-full">
               <p className="text-xl">Item Description</p>
-              <p className="mt-4 lg:text-lg">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Architecto quae eum, alias quam doloribus placeat nulla labore
-                vel consequuntur possimus cupiditate, sequi ut autem. Ut id
-                ipsam sit voluptatum iste?
-              </p>
+              <p className="mt-4 lg:text-lg">{product?.description}</p>
             </div>
 
             <button
-              onClick={addToBag}
+              type="submit"
+              onClick={() => addToCart(product.id, 1)}
               className="cursor-pointer my-12 bottom-0 bg-black text-white w-full py-6 text-xl text-center rounded-full 2xl:my-14"
             >
-              Add to Bag
+              Add to Cart
             </button>
           </div>
         </div>
