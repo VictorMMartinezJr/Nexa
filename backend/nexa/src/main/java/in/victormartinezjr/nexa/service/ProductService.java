@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -24,18 +25,17 @@ public class ProductService {
     public List<Product> getFilteredProducts(String sort, String audience, String category) {
         List<Product> products = productRepo.findAll();
 
-        System.out.println("Audience: " + audience + ", Category: " + category);
-        products.forEach(p -> System.out.println(p.getName() + " | " + p.getCategory() + " | " + p.getAudience()));
-
-
         // Filter by (mens, womens, kids)
         if (audience != null && !audience.isBlank()) {
-            products = products.stream().filter(product -> product.getAudience() != null && product.getAudience().equalsIgnoreCase(audience)).toList();
+            products = products.stream().filter(product -> product.getAudience() != null && product.getAudience().equalsIgnoreCase(audience))
+                    .collect(Collectors.toList());
         }
 
         // Filter by category (hoodies, bottoms, etc)
         if (category != null && !category.isBlank()) {
-            products = products.stream().filter(product -> product.getCategory() != null && product.getCategory().toLowerCase().contains(category.toLowerCase())).toList();
+            products = products.stream()
+                    .filter(product -> product.getCategory() != null && (product.getCategory().toLowerCase().contains(category.toLowerCase()) || product.getCategory().toLowerCase().contains(category.substring(0, category.length()-1).toLowerCase())))
+                    .collect(Collectors.toList());
         }
 
         // Sort by price
