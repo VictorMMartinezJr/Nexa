@@ -3,7 +3,6 @@ import ProductGrid from "../ProductGrid";
 import FilterSlider from "../Slider/FilterSlider";
 import { IoOptionsOutline } from "react-icons/io5";
 import { RiCloseFill } from "react-icons/ri";
-import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 
 const Products = () => {
@@ -51,7 +50,12 @@ const Products = () => {
 
   return (
     <div className="lg:px-4 2xl:px-8">
-      <h2 className="pt-8 px-4 lg:px-0 lg:hidden">Clothing</h2>
+      <h2 className="pt-8 px-4 lg:px-0 lg:hidden">
+        {audience
+          ? audience[0].toUpperCase() + audience.slice(1, audience.length)
+          : ""}{" "}
+        {category ? category : "Products"}
+      </h2>
 
       {/* Category slider */}
       <FilterSlider />
@@ -60,7 +64,10 @@ const Products = () => {
       <div className="w-full flex justify-between items-center py-4 px-4 lg:px-0">
         <p className="lg:hidden">{products.length} Results</p>
         <p className="hidden lg:block lg:text-2xl">
-          Men's Clothing ({products.length})
+          {audience
+            ? audience[0].toUpperCase() + audience.slice(1, audience.length)
+            : ""}{" "}
+          {category ? category : "Products"} ({products.length})
         </p>
 
         {/* Buttons */}
@@ -252,6 +259,7 @@ const Products = () => {
               category={p.category}
               price={p.price}
               productId={p.id}
+              imgURL={p.imageURL}
             />
           ))}
         </div>
