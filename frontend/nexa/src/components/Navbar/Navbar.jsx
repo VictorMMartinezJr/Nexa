@@ -86,17 +86,17 @@ const Navbar = () => {
       </ul>
 
       <DesktopHiddenNav
-        category="Mens"
+        title="Mens"
         state={isMensDesktopListActive}
         resetStates={resetDesktopStates}
       />
       <DesktopHiddenNav
-        category="Womens"
+        title="Womens"
         state={isWomensDesktopListActive}
         resetStates={resetDesktopStates}
       />
       <DesktopHiddenNav
-        category="Kids"
+        title="Kids"
         state={isKidsDesktopListActive}
         resetStates={resetDesktopStates}
       />
