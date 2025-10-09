@@ -188,11 +188,26 @@ const Navbar = () => {
         </div>
 
         {/* Mens List */}
-        <SubNavList state={isMensListActive} title="Mens" />
+        <SubNavList
+          state={isMensListActive}
+          title="Mens"
+          resetMobileStates={resetMobileStates}
+          setIsMobileNavActive={setIsMobileNavActive}
+        />
         {/* Womens List */}
-        <SubNavList state={isWomensListActive} title="Womens" />
+        <SubNavList
+          state={isWomensListActive}
+          title="Womens"
+          resetMobileStates={resetMobileStates}
+          setIsMobileNavActive={setIsMobileNavActive}
+        />
         {/* Kids List */}
-        <SubNavList state={isKidsListActive} title="Kids" />
+        <SubNavList
+          state={isKidsListActive}
+          title="Kids"
+          resetMobileStates={resetMobileStates}
+          setIsMobileNavActive={setIsMobileNavActive}
+        />
       </ul>
     </nav>
   );
