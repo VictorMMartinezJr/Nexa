@@ -5,6 +5,7 @@ import in.victormartinezjr.nexa.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,12 +32,25 @@ public class ProductService {
                     .collect(Collectors.toList());
         }
 
+        System.out.println(category);
+
         // Filter by category (hoodies, bottoms, etc)
         if (category != null && !category.isBlank()) {
-            products = products.stream()
-                    .filter(product -> product.getCategory() != null && (product.getCategory().toLowerCase().contains(category.toLowerCase()) || product.getCategory().toLowerCase().contains(category.substring(0, category.length()-1).toLowerCase())))
-                    .collect(Collectors.toList());
+            if (!category.toLowerCase().contains("clothing")) {
+                products = products.stream()
+                        .filter(product -> product.getCategory() != null && (product.getCategory().toLowerCase().contains(category.toLowerCase())
+                                || product.getCategory().toLowerCase().contains(category.substring(0, category.length() - 1).toLowerCase())
+                                || (category.toLowerCase().contains("shoes") && product.getCategory().toLowerCase().contains("slides"))))
+                        .collect(Collectors.toList());
+            } else {
+                products = products.stream()
+                        .filter(product -> product.getCategory() != null && (product.getCategory().toLowerCase().contains("t-shirt")
+                                || product.getCategory().toLowerCase().contains("hoodie") || product.getCategory().toLowerCase().contains("shorts") || product.getCategory().toLowerCase().contains("pants")))
+                        .collect(Collectors.toList());
+            }
         }
+
+
 
         // Sort by price
         if ("lowToHigh".equals(sort)) {
