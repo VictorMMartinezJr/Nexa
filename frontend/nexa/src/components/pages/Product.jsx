@@ -1,8 +1,7 @@
 import axios from "axios";
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { nav } from "framer-motion/client";
 import { toast } from "react-toastify";
 
 const Product = () => {
@@ -30,7 +29,7 @@ const Product = () => {
 
     // Size must be selected
     const size = shoesActive ? selectedShoeSize : selectedApparelSize;
-    if (!size) {
+    if (!size || size === -1) {
       toast.error("Please select a size.");
       return;
     }
@@ -62,7 +61,7 @@ const Product = () => {
       setProduct(data);
       console.log(data);
 
-      if (data.category.toLowerCase().includes("shoes")) {
+      if (data.category.toLowerCase().includes("shoe")) {
         setShoesActive(true);
       } else {
         setShoesActive(false);
@@ -86,7 +85,14 @@ const Product = () => {
 
           {/* Item image */}
           <div className="flex-1">
-            <img src="https://placehold.co/600x900" alt="" />
+            <img
+              src={
+                product?.imageURL
+                  ? product?.imageURL
+                  : "https://placehold.co/600x900"
+              }
+              alt=""
+            />
           </div>
 
           {/* Sizes */}
@@ -118,8 +124,13 @@ const Product = () => {
                         selectedShoeSize == size
                           ? "border-black"
                           : "border-gray-400"
-                      } `}
+                      } ${
+                        !product?.[`has${size}`]
+                          ? "text-gray-500"
+                          : "text-black"
+                      }`}
                       onClick={() => setSelectedShoeSize(size)}
+                      disabled={!product?.[`has${size}`]}
                     >
                       {size}
                     </button>
@@ -171,8 +182,13 @@ const Product = () => {
                           selectedApparelSize == size
                             ? "border-black"
                             : "border-gray-400"
-                        } `}
+                        } ${
+                          !product?.[`has${size}`]
+                            ? "text-gray-500"
+                            : "text-black"
+                        }`}
                         onClick={() => setSelectedApparelSize(size)}
+                        disabled={!product?.[`has${size}`]}
                       >
                         {size}
                       </button>
@@ -185,8 +201,13 @@ const Product = () => {
                           selectedShoeSize == size
                             ? "border-black"
                             : "border-gray-400"
-                        } `}
+                        }${
+                          !product?.[`has${size}`]
+                            ? "text-gray-500"
+                            : "text-black"
+                        }`}
                         onClick={() => setSelectedShoeSize(size)}
+                        disabled={!product?.[`has${size}`]}
                       >
                         {size}
                       </button>
