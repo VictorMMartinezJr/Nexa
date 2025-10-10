@@ -6,8 +6,14 @@ import "swiper/css/navigation";
 import shopBasketball from "../../assets/shop-basketball.jpg";
 import shopRunning from "../../assets/shop-running.jpg";
 import shopAccessories from "../../assets/shop-accessories.jpg";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
+import { nav } from "framer-motion/client";
 
 const Slider = () => {
+  const { setAudience, setCategory, setSortOption } = useContext(AppContext);
+  const navigate = useNavigate();
   return (
     <>
       {/* Mobile & Tablet Slider */}
@@ -26,7 +32,13 @@ const Slider = () => {
         >
           {/* Slide 1 */}
           <SwiperSlide>
-            <button className="flex flex-col justify-center items-start cursor-pointer">
+            <button
+              className="flex flex-col justify-center items-start cursor-pointer"
+              onClick={() => {
+                setCategory("Basketball");
+                navigate("/products");
+              }}
+            >
               <img
                 src={shopBasketball}
                 alt="Shop basketball"
@@ -37,7 +49,13 @@ const Slider = () => {
           </SwiperSlide>
           {/* Slide 2 */}
           <SwiperSlide>
-            <button className="flex flex-col justify-center items-start cursor-pointer">
+            <button
+              className="flex flex-col justify-center items-start cursor-pointer"
+              onClick={() => {
+                setCategory("Running");
+                navigate("/products");
+              }}
+            >
               <img
                 src={shopRunning}
                 alt="Shop running"
@@ -48,7 +66,13 @@ const Slider = () => {
           </SwiperSlide>
           {/* Slide 3 */}
           <SwiperSlide>
-            <div className="flex flex-col justify-center items-start cursor-pointer">
+            <div
+              className="flex flex-col justify-center items-start cursor-pointer"
+              onClick={() => {
+                setCategory("Accessories");
+                navigate("/products");
+              }}
+            >
               <img
                 src={shopAccessories}
                 alt="Shop accessories"
@@ -63,7 +87,13 @@ const Slider = () => {
       {/* Desktop Images */}
       <div className="hidden lg:grid lg:grid-cols-3 lg:w-full lg:h-[80vh] lg:bg-white lg:px-4 lg:py-8 lg:gap-2">
         {/* Image 1 */}
-        <button className="relative cursor-pointer whitespace-nowrap">
+        <button
+          className="relative cursor-pointer whitespace-nowrap"
+          onClick={() => {
+            setCategory("Basketball");
+            navigate("/products");
+          }}
+        >
           <img
             src={shopBasketball}
             alt="Shop basketball"
@@ -74,7 +104,13 @@ const Slider = () => {
           </p>
         </button>
         {/* Image 2 */}
-        <button className="relative flex-1/3 cursor-pointer whitespace-nowrap">
+        <button
+          className="relative flex-1/3 cursor-pointer whitespace-nowrap"
+          onClick={() => {
+            setCategory("Running");
+            navigate("/products");
+          }}
+        >
           <img
             src={shopRunning}
             alt="Shop running"
@@ -85,7 +121,13 @@ const Slider = () => {
           </p>
         </button>
         {/* Image 3 */}
-        <button className="relative cursor-pointer whitespace-nowrap">
+        <button
+          className="relative cursor-pointer whitespace-nowrap"
+          onClick={() => {
+            setCategory("Accessories");
+            navigate("/products");
+          }}
+        >
           <img
             src={shopAccessories}
             alt="Shop accessories"
