@@ -8,7 +8,7 @@ const FilterSlider = () => {
     useContext(AppContext);
 
   const handleClick = (selectedCat) => {
-    setCategory(selectedCat);
+    setCategory(selectedCat.slice(0, -1));
 
     fetchProducts(
       "http://localhost:8080/api/products",

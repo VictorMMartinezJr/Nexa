@@ -33,8 +33,8 @@ const SubNavList = ({
       <li
         className="flex justify-between items-center pl-4 text-xl"
         onClick={() => {
-          setAudience(title.toLowerCase().slice(0, -1));
-          setCategory("Shoes");
+          setAudience(title.toLowerCase());
+          setCategory("Shoe");
           resetMobileStates();
           setIsMobileNavActive(false);
           navigate("/products");
