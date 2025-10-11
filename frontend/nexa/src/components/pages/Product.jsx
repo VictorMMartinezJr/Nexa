@@ -159,7 +159,14 @@ const Product = () => {
         <div className="hidden md:flex justify-between items-start min-h-auto mt-8 p-8 xl:w-[70%] 2xl:w-[50%]">
           {/* Item image */}
           <div className="flex-1">
-            <img src="https://placehold.co/400x400" alt="" />
+            <img
+              src={
+                product?.imageURL
+                  ? product?.imageURL
+                  : "https://placehold.co/400x400"
+              }
+              alt=""
+            />
           </div>
 
           <div className="flex flex-col justify-center items-center flex-1 px-4">
@@ -171,7 +178,8 @@ const Product = () => {
             </div>
 
             {/* Sizes */}
-            <div className="flex flex-col w-full my-12 2xl:my-14">
+            {/* Sizes */}
+            <div className="flex flex-col w-full px-4 my-8">
               <p className="text-xl">Select Size</p>
               <div className="grid grid-cols-2 gap-2 w-full mt-4">
                 {!shoesActive // apparel sizes
@@ -183,12 +191,12 @@ const Product = () => {
                             ? "border-black"
                             : "border-gray-400"
                         } ${
-                          !product?.[`has${size}`]
+                          !product[`has${size}`]
                             ? "text-gray-500"
                             : "text-black"
                         }`}
                         onClick={() => setSelectedApparelSize(size)}
-                        disabled={!product?.[`has${size}`]}
+                        disabled={!product[`has${size}`]}
                       >
                         {size}
                       </button>
@@ -201,7 +209,7 @@ const Product = () => {
                           selectedShoeSize == size
                             ? "border-black"
                             : "border-gray-400"
-                        }${
+                        } ${
                           !product?.[`has${size}`]
                             ? "text-gray-500"
                             : "text-black"
