@@ -19,86 +19,56 @@ const DesktopHiddenNav = ({ title, state, resetStates }) => {
         className="w-1/4 flex flex-col justify-center items-center gap-8"
         onMouseLeave={() => resetStates()}
       >
-        <div className="flex justtify-center border-2 gap-20">
+        <div className="flex justtify-center gap-20">
           <ul
             className="flex flex-col"
             onClick={(e) => {
-              switch (e.target.textContent) {
-                case "T-Shirts":
-                  setCategory("T-Shirt");
-                  break;
-                case "Hoodies":
-                  setCategory("Hoodie");
-                  break;
-                case "Pants":
-                  setCategory("Pant");
-                  break;
-                case "Shorts":
-                  setCategory("Short");
-                  break;
-                default:
-                  setCategory("Clothing");
-              }
+              setCategory(e.target.textContent);
 
               resetStates();
               setAudience(title.toLowerCase());
               navigate("/products");
             }}
           >
-            <li className="cursor-pointer text-black py-1">Clothing</li>
-            <li className="cursor-pointer text-sm py-1">T-Shirts</li>
-            <li className="cursor-pointer text-sm py-1">Hoodies</li>
-            <li className="cursor-pointer text-sm py-1">Pants</li>
-            <li className="cursor-pointer text-sm py-1">Shorts</li>
+            <li className="cursor-pointer text-black py-1">Apparel</li>
+            <li className="cursor-pointer  py-1">T-Shirts</li>
+            <li className="cursor-pointer  py-1">Hoodies</li>
+            <li className="cursor-pointer  py-1">Pants</li>
+            <li className="cursor-pointer  py-1">Shorts</li>
           </ul>
           <ul
             className="flex flex-col"
             onClick={(e) => {
-              switch (e.target.textContent) {
-                case "Running":
-                  setCategory("Running Shoe");
-                  break;
-                case "Basketball":
-                  setCategory("Basketball Shoe");
-                  break;
-                case "Lifestyle":
-                  setCategory("Lifestyle Shoe");
-                  break;
-                default:
-                  setCategory("Shoe");
+              if (e.target.textContent === "Shoes") {
+                setCategory(e.target.textContent);
+              } else {
+                setCategory(e.target.textContent + " Shoes");
               }
+
               resetStates();
               setAudience(title.toLowerCase());
               navigate("/products");
             }}
           >
             <li className="cursor-pointer text-black py-1">Shoes</li>
-            <li className="cursor-pointer text-sm py-1">Running</li>
-            <li className="cursor-pointer text-sm py-1">Basketball</li>
-            <li className="cursor-pointer text-sm py-1">Lifestyle</li>
+            <li className="cursor-pointer py-1">Running</li>
+            <li className="cursor-pointer py-1">Basketball</li>
+            <li className="cursor-pointer py-1">Lifestyle</li>
           </ul>
 
           <ul
             className="flex flex-col"
             onClick={(e) => {
-              switch (e.target.textContent) {
-                case "Headgear":
-                  setCategory("Accessories Headgear");
-                  break;
-                case "Socks":
-                  setCategory("Accessories Socks");
-                  break;
-                default:
-                  setCategory("Accessories");
-              }
+              setCategory(e.target.textContent);
               resetStates();
               setAudience(title.toLowerCase());
               navigate("/products");
             }}
           >
             <li className="cursor-pointer text-black py-1">Accessories</li>
-            <li className="cursor-pointer text-sm py-1">Headgear</li>
-            <li className="cursor-pointer text-sm py-1">Socks</li>
+            <li className="cursor-pointer py-1">Headgear</li>
+            <li className="cursor-pointer py-1">Socks</li>
+            <li className="cursor-pointer py-1">Bags</li>
           </ul>
         </div>
       </div>
