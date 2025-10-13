@@ -80,6 +80,7 @@ const SearchbarContainer = ({ state, setState }) => {
             category={product.category}
             price={product.price}
             productId={product.id}
+            imgURL={product.imageURL}
             handleCancel={handleCancel}
           />
         ))}
