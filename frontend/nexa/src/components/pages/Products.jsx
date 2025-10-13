@@ -251,18 +251,24 @@ const Products = () => {
         )}
 
         {/* Products grid */}
-        <div className="flex-1 grid grid-cols-2 gap-2 lg:grid-cols-3">
-          {products.map((p) => (
-            <ProductGrid
-              key={p.id}
-              name={p.name}
-              category={p.category}
-              price={p.price}
-              productId={p.id}
-              imgURL={p.imageURL}
-            />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="flex-1 grid grid-cols-2 gap-2 lg:grid-cols-3">
+            {products.map((p) => (
+              <ProductGrid
+                key={p.id}
+                name={p.name}
+                category={p.category}
+                price={p.price}
+                productId={p.id}
+                imgURL={p.imageURL}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center">
+            <p className="text-lg">No Results Found</p>
+          </div>
+        )}
       </div>
     </div>
   );
