@@ -10,6 +10,10 @@ const Products = () => {
 
   const {
     products,
+    isApparelActive,
+    setIsApparelActive,
+    isShoesActive,
+    setIsShoesActive,
     sortOption,
     setSortOption,
     category,
@@ -48,6 +52,17 @@ const Products = () => {
       category,
       selectedSizes
     );
+
+    if (category?.includes("Shoes")) {
+      setIsShoesActive(true);
+      setIsApparelActive(false);
+    } else if (category === null) {
+      setIsApparelActive(true);
+      setIsShoesActive(true);
+    } else {
+      setIsApparelActive(true);
+      setIsShoesActive(false);
+    }
   }, [sortOption, audience, category, selectedSizes]);
 
   return (
@@ -138,22 +153,43 @@ const Products = () => {
           <legend className="py-4">Size</legend>
 
           {/* Map sizes */}
-          <div className="flex justify-center gap-4">
-            {["S", "M", "L", "XL", "XXL"].map((size) => (
-              <label key={size}>
-                <input
-                  type="checkbox"
-                  value={size}
-                  checked={selectedSizes.includes(size)}
-                  onChange={handleSizeChange}
-                  className="peer hidden"
-                />
-                <span className="px-4 py-1 rounded-md border-1 border-gray-200 peer-checked:border-black">
-                  {size}
-                </span>
-              </label>
-            ))}
-          </div>
+          {isApparelActive && (
+            <div className="flex justify-center gap-4">
+              {["S", "M", "L", "XL", "XXL"].map((size) => (
+                <label key={size}>
+                  <input
+                    type="checkbox"
+                    value={size}
+                    checked={selectedSizes.includes(size)}
+                    onChange={handleSizeChange}
+                    className="peer hidden"
+                  />
+                  <span className="px-4 py-1 rounded-md border-1 border-gray-200 peer-checked:border-black">
+                    {size}
+                  </span>
+                </label>
+              ))}
+            </div>
+          )}
+
+          {isShoesActive && (
+            <div className="flex justify-center gap-4 flex-wrap">
+              {["6", "7", "8", "9", "10", "11", "12"].map((size) => (
+                <label key={size}>
+                  <input
+                    type="checkbox"
+                    value={size}
+                    checked={selectedSizes.includes(size)}
+                    onChange={handleSizeChange}
+                    className="peer hidden"
+                  />
+                  <span className="px-4 py-1 rounded-md border-1 border-gray-200 peer-checked:border-black">
+                    {size}
+                  </span>
+                </label>
+              ))}
+            </div>
+          )}
         </fieldset>
 
         {/* Clear & apply buttpns */}
@@ -222,22 +258,43 @@ const Products = () => {
               <legend className="py-4">Size</legend>
 
               {/* Map sizes */}
-              <div className="flex justify-center gap-4 flex-wrap">
-                {["S", "M", "L", "XL", "XXL"].map((size) => (
-                  <label key={size}>
-                    <input
-                      type="checkbox"
-                      value={size}
-                      checked={selectedSizes.includes(size)}
-                      onChange={handleSizeChange}
-                      className="peer hidden"
-                    />
-                    <span className="px-4 py-1 rounded-md border-1 border-gray-200 peer-checked:border-black">
-                      {size}
-                    </span>
-                  </label>
-                ))}
-              </div>
+              {isApparelActive && (
+                <div className="flex justify-center gap-4">
+                  {["S", "M", "L", "XL", "XXL"].map((size) => (
+                    <label key={size}>
+                      <input
+                        type="checkbox"
+                        value={size}
+                        checked={selectedSizes.includes(size)}
+                        onChange={handleSizeChange}
+                        className="peer hidden"
+                      />
+                      <span className="px-4 py-1 rounded-md border-1 border-gray-200 peer-checked:border-black">
+                        {size}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {isShoesActive && (
+                <div className="flex justify-center gap-4 flex-wrap">
+                  {["6", "7", "8", "9", "10", "11", "12"].map((size) => (
+                    <label key={size}>
+                      <input
+                        type="checkbox"
+                        value={size}
+                        checked={selectedSizes.includes(size)}
+                        onChange={handleSizeChange}
+                        className="peer hidden"
+                      />
+                      <span className="px-4 py-1 rounded-md border-1 border-gray-200 peer-checked:border-black">
+                        {size}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
             </fieldset>
 
             {/* Clear & apply buttpns */}
