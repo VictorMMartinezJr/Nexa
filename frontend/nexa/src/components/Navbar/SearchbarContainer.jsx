@@ -4,12 +4,10 @@ import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 import ProductGrid from "../ProductGrid";
-import { useNavigate } from "react-router-dom";
 
 const SearchbarContainer = ({ state, setState }) => {
   const [searchInput, setSearchInput] = useState("");
   const { searchedProducts, setSearchedProducts } = useContext(AppContext);
-  const navigate = useNavigate();
 
   const handleChange = async (value) => {
     try {
@@ -31,7 +29,7 @@ const SearchbarContainer = ({ state, setState }) => {
 
   return (
     <div
-      className={`z-20 fixed flex flex-col bg-white h-screen w-full p-4 top-0 right-0 overflow-hidden transform transition-transform duration-300 ease-in-out ${
+      className={`z-20 fixed flex flex-col bg-white h-screen w-full p-4 top-0 right-0 overflow-x-hidden transform transition-transform duration-300 ease-in-out ${
         state ? "translate-x-0" : "translate-x-full"
       } lg:h-auto 2xl:px-8`}
     >
@@ -72,8 +70,8 @@ const SearchbarContainer = ({ state, setState }) => {
       </div>
 
       {/* Searched products */}
-      <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 my-8 z-30">
-        {searchedProducts.map((product) => (
+      <div className="grid grid-cols-2 gap-2 lg:grid-cols-6 my-8 z-30">
+        {searchedProducts.slice(0, 6).map((product) => (
           <ProductGrid
             key={product.id}
             name={product.name}
