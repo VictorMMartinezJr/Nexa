@@ -7,7 +7,6 @@ import { AppContext } from "../../context/AppContext";
 
 const Products = () => {
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedSizes, setSelectedSizes] = useState([]);
 
   const {
     products,
@@ -16,6 +15,8 @@ const Products = () => {
     category,
     audience,
     fetchProducts,
+    selectedSizes,
+    setSelectedSizes,
   } = useContext(AppContext);
 
   const handleSortChange = (e) => {
@@ -44,9 +45,10 @@ const Products = () => {
       "http://localhost:8080/api/products",
       sortOption,
       audience,
-      category
+      category,
+      selectedSizes
     );
-  }, [sortOption, audience, category]);
+  }, [sortOption, audience, category, selectedSizes]);
 
   return (
     <div className="lg:px-4 2xl:px-8">
