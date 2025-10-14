@@ -80,6 +80,11 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  const resetFilters = () => {
+    setSelectedSizes([]);
+    setSortOption("");
+  };
+
   const getUserCart = async () => {
     axios.defaults.withCredentials = true;
 
@@ -126,6 +131,7 @@ export const AppContextProvider = (props) => {
     cart,
     getUserCart,
     getAuthStatus,
+    resetFilters,
   };
 
   return (

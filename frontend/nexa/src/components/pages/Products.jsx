@@ -21,6 +21,7 @@ const Products = () => {
     fetchProducts,
     selectedSizes,
     setSelectedSizes,
+    resetFilters,
   } = useContext(AppContext);
 
   const handleSortChange = (e) => {
@@ -37,11 +38,6 @@ const Products = () => {
 
   const handleSubmit = () => {
     setShowFilters(false);
-  };
-
-  const resetFilters = () => {
-    setSelectedSizes([]);
-    setSortOption("");
   };
 
   useEffect(() => {
