@@ -22,7 +22,7 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public List<Product> getFilteredProducts(String sort, String audience, String category) {
+    public List<Product> getFilteredProducts(String sort, String audience, String category, List<String> selectedSizes) {
         List<Product> products = productRepo.findAll();
 
         // Filter by (mens, womens, kids)
@@ -46,6 +46,29 @@ public class ProductService {
             products.sort((a,b) -> a.getPrice().compareTo(b.getPrice()));
         } else if ("highToLow".equals(sort)) {
             products.sort((a,b) -> b.getPrice().compareTo(a.getPrice()));
+        }
+
+        // Sort by size
+        if (selectedSizes != null && !selectedSizes.isEmpty()) {
+            products = products.stream()
+                    .filter(product -> selectedSizes.stream().anyMatch(size -> {
+                        return switch (size) {
+                            case "S" -> product.isHasS();
+                            case "M" -> product.isHasM();
+                            case "L" -> product.isHasL();
+                            case "XL" -> product.isHasXL();
+                            case "XXL" -> product.isHasXXL();
+                            case "6"  -> product.isHas6();
+                            case "7"  -> product.isHas7();
+                            case "8" -> product.isHas8();
+                            case "9" -> product.isHas9();
+                            case "10" -> product.isHas10();
+                            case "11" -> product.isHas11();
+                            case "12" -> product.isHas12();
+                            default -> false;
+                        };
+                    }))
+                    .collect(Collectors.toList());
         }
 
         return products;
