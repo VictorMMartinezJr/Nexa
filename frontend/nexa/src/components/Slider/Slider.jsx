@@ -9,7 +9,6 @@ import shopAccessories from "../../assets/shop-accessories.jpg";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { nav } from "framer-motion/client";
 
 const Slider = () => {
   const { setAudience, setCategory, setSortOption } = useContext(AppContext);
@@ -91,6 +90,8 @@ const Slider = () => {
           className="relative cursor-pointer whitespace-nowrap"
           onClick={() => {
             setCategory("Basketball");
+            setAudience(null);
+            setSortOption(null);
             navigate("/products");
           }}
         >
@@ -108,6 +109,8 @@ const Slider = () => {
           className="relative flex-1/3 cursor-pointer whitespace-nowrap"
           onClick={() => {
             setCategory("Running");
+            setAudience(null);
+            setSortOption(null);
             navigate("/products");
           }}
         >
@@ -125,6 +128,8 @@ const Slider = () => {
           className="relative cursor-pointer whitespace-nowrap"
           onClick={() => {
             setCategory("Accessories");
+            setAudience(null);
+            setSortOption(null);
             navigate("/products");
           }}
         >

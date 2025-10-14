@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import { s } from "framer-motion/client";
 
 const DesktopHiddenNav = ({ title, state, resetStates }) => {
   const { setAudience, setCategory, resetFilters } = useContext(AppContext);

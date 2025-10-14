@@ -8,7 +8,7 @@ const SubNavList = ({
   resetMobileStates,
   setIsMobileNavActive,
 }) => {
-  const { setAudience, setCategory } = useContext(AppContext);
+  const { setAudience, setCategory, resetFilters } = useContext(AppContext);
   const navigate = useNavigate();
 
   return (
@@ -22,21 +22,23 @@ const SubNavList = ({
         className=" flex justify-between items-center pl-4 text-xl"
         onClick={() => {
           setAudience(title.toLowerCase());
-          setCategory("Clothing");
+          setCategory("Apparel");
           resetMobileStates();
           setIsMobileNavActive(false);
+          resetFilters();
           navigate("/products");
         }}
       >
-        <p>Clothing</p>
+        <p>Apparel</p>
       </li>
       <li
         className="flex justify-between items-center pl-4 text-xl"
         onClick={() => {
           setAudience(title.toLowerCase());
-          setCategory("Shoe");
+          setCategory("Shoes");
           resetMobileStates();
           setIsMobileNavActive(false);
+          resetFilters();
           navigate("/products");
         }}
       >
@@ -49,6 +51,7 @@ const SubNavList = ({
           setCategory("Accessories");
           resetMobileStates();
           setIsMobileNavActive(false);
+          resetFilters();
           navigate("/products");
         }}
       >
