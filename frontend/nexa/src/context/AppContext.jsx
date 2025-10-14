@@ -10,18 +10,29 @@ export const AppContextProvider = (props) => {
   const [sortOption, setSortOption] = useState(null);
   const [audience, setAudience] = useState(null);
   const [category, setCategory] = useState(null);
+  const [selectedSizes, setSelectedSizes] = useState([]);
+  const [isApparelActive, setIsApparelActive] = useState(true);
+  const [isShoesActive, setIsShoesActive] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [cart, setCart] = useState({ items: [], total: 0 });
 
   axios.defaults.withCredentials = true;
 
-  const fetchProducts = async (url, sortOption, audience, category) => {
+  const fetchProducts = async (
+    url,
+    sortOption,
+    audience,
+    category,
+    selectedSizes
+  ) => {
     try {
       const response = await axios.get(url, {
         params: {
           sort: sortOption,
           audience: audience,
           category: category,
+          selectedSizes: selectedSizes,
         },
       });
       setProducts(response.data);
@@ -69,6 +80,22 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  const getUserCart = async () => {
+    axios.defaults.withCredentials = true;
+
+    try {
+      const response = await axios.get("http://localhost:8080/api/cart");
+
+      if (response.status === 200) {
+        const cartData = response.data;
+
+        setCart({ items: cartData.items, total: cartData.totalCartPrice });
+      }
+    } catch (error) {
+      toast.error("Unable to fetch cart.");
+    }
+  };
+
   useEffect(() => {
     getAuthStatus();
   }, []);
@@ -78,6 +105,10 @@ export const AppContextProvider = (props) => {
     setProducts,
     searchedProducts,
     setSearchedProducts,
+    isApparelActive,
+    setIsApparelActive,
+    isShoesActive,
+    setIsShoesActive,
     sortOption,
     setSortOption,
     category,
@@ -85,11 +116,16 @@ export const AppContextProvider = (props) => {
     audience,
     setAudience,
     fetchProducts,
+    selectedSizes,
+    setSelectedSizes,
     isLoggedIn,
     setIsLoggedIn,
     userData,
     setUserData,
     getUserAccount,
+    cart,
+    getUserCart,
+    getAuthStatus,
   };
 
   return (
