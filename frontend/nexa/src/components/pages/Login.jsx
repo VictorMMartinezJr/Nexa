@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 
 const Login = () => {
@@ -14,6 +14,9 @@ const Login = () => {
   const { isLoggedIn, setIsLoggedIn, getUserAccount, setUserData } =
     useContext(AppContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -52,7 +55,7 @@ const Login = () => {
         if (response.status === 200) {
           setIsLoggedIn(true);
           await getUserAccount();
-          navigate("/");
+          navigate(from, { replace: true });
           toast.success(`Welcome Back!`);
         }
       }

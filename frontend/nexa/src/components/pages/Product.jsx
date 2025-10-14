@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
 
@@ -11,6 +11,7 @@ const Product = () => {
   const [selectedApparelSize, setSelectedApparelSize] = useState("");
   const [selectedShoeSize, setSelectedShoeSize] = useState(-1);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { isLoggedIn, getUserCart } = useContext(AppContext);
 
@@ -22,9 +23,8 @@ const Product = () => {
 
     // user must be logged in to add items to cart
     if (!isLoggedIn) {
-      navigate("/login");
       toast.info("Please login to add items to your cart.");
-      return;
+      return navigate("/login", { state: { from: location } });
     }
 
     // Size must be selected
@@ -59,7 +59,6 @@ const Product = () => {
       );
       const data = response.data;
       setProduct(data);
-      console.log(data);
 
       if (data.category.toLowerCase().includes("shoe")) {
         setShoesActive(true);
