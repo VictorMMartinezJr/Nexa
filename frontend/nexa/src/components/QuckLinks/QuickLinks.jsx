@@ -10,12 +10,14 @@ const QuickLinks = () => {
         subText={"Shop the Newest Trends"}
         mainText={"Own Each Step"}
         altText={"Shop shoes"}
+        category="Shoes"
       />
       <QuickLink
         img={shopOuterwear}
         subText={"Fresh Layers, Fresh Look"}
         mainText={"Stay Warm. Stay Ahead."}
         altText={"Shop outerwear"}
+        category="Lifestyle"
       />
     </div>
   );

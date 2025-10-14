@@ -1,4 +1,17 @@
-const QuickLink = ({ img, subText, mainText, altText }) => {
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
+
+const QuickLink = ({ img, subText, mainText, altText, category }) => {
+  const { setAudience, setCategory } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    setAudience(null);
+    setCategory(category);
+    navigate("/products");
+  };
+
   return (
     <div className="w-full h-screen relative flex justify-center items-center md:h-[50vh]">
       <img
@@ -11,7 +24,10 @@ const QuickLink = ({ img, subText, mainText, altText }) => {
       <div className="absolute flex flex-col justify-center items-start gap-4 left-0 -translate-x-0 bottom-0 -translate-y-0 pl-6 pb-6 text-white z-10">
         <p>{subText}</p>
         <p className="text-3xl">{mainText}</p>
-        <button className="bg-white text-black px-4 py-1.5 rounded-2xl cursor-pointer lg:px-6">
+        <button
+          className="bg-white text-black px-4 py-1.5 rounded-2xl cursor-pointer lg:px-6"
+          onClick={handleClick}
+        >
           Shop
         </button>
       </div>
