@@ -12,6 +12,7 @@ const CartItem = ({
   productPrice,
   quantity,
   category,
+  imgURL,
 }) => {
   const { getUserCart } = useContext(AppContext);
   axios.defaults.withCredentials = true;
@@ -49,7 +50,11 @@ const CartItem = ({
   return (
     <div className="flex justify-between w-full">
       <div>
-        <img src="https://placehold.co/180x180" alt="" className="lg:w-80" />
+        <img
+          src={imgURL ? imgURL : "https://placehold.co/180x180"}
+          alt=""
+          className="lg:w-80"
+        />
         <div className="mt-2 border-1 rounded-full flex justify-around items-center py-1 w-3/4 lg:w-1/2">
           <button
             className="cursor-pointer"

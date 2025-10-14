@@ -58,6 +58,7 @@ const Cart = () => {
                 productPrice={i.productPrice}
                 quantity={i.quantity}
                 category={i.category}
+                imgURL={i.imageURL}
               />
             ))
           ) : (
