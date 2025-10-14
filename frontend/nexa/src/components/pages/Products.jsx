@@ -320,7 +320,7 @@ const Products = () => {
             ))}
           </div>
         ) : (
-          <div className="flex justify-center">
+          <div className="flex-1 grid grid-cols-2 gap-2 lg:grid-cols-3">
             <p className="text-lg">No Results Found</p>
           </div>
         )}

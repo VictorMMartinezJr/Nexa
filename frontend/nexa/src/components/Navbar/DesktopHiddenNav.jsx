@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { s } from "framer-motion/client";
 
 const DesktopHiddenNav = ({ title, state, resetStates }) => {
-  const { setAudience, setCategory } = useContext(AppContext);
+  const { setAudience, setCategory, resetFilters } = useContext(AppContext);
   const navigate = useNavigate();
 
   return (
@@ -26,6 +26,7 @@ const DesktopHiddenNav = ({ title, state, resetStates }) => {
               setCategory(e.target.textContent);
 
               resetStates();
+              resetFilters();
               setAudience(title.toLowerCase());
               navigate("/products");
             }}
@@ -46,6 +47,7 @@ const DesktopHiddenNav = ({ title, state, resetStates }) => {
               }
 
               resetStates();
+              resetFilters();
               setAudience(title.toLowerCase());
               navigate("/products");
             }}
@@ -61,6 +63,7 @@ const DesktopHiddenNav = ({ title, state, resetStates }) => {
             onClick={(e) => {
               setCategory(e.target.textContent);
               resetStates();
+              resetFilters();
               setAudience(title.toLowerCase());
               navigate("/products");
             }}

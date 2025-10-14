@@ -4,17 +4,26 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
 const FilterSlider = () => {
-  const { fetchProducts, sortOption, audience, category, setCategory } =
-    useContext(AppContext);
+  const {
+    fetchProducts,
+    sortOption,
+    audience,
+    category,
+    setCategory,
+    selectedSizes,
+    resetFilters,
+  } = useContext(AppContext);
 
   const handleClick = (selectedCat) => {
-    setCategory(selectedCat.slice(0, -1));
+    setCategory(selectedCat);
+    resetFilters();
 
     fetchProducts(
       "http://localhost:8080/api/products",
       sortOption,
       audience,
-      category
+      category,
+      selectedSizes
     );
   };
   return (
