@@ -25,7 +25,7 @@ const Hero = () => {
           playsInline
           aria-label="Video showing a basketball going into a hoop"
         >
-          <source src={hero} type="video/mp4" />
+          <source src={basketball} type="video/mp4" />
         </video>
 
         {/* Overlay text */}
