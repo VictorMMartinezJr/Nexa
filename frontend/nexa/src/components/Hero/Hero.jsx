@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import hero from "../../assets/hero.mp4";
+import basketball from "../../assets/basketball.mp4";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
