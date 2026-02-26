@@ -32,7 +32,7 @@ const Products = () => {
     const { value, checked } = e.target;
 
     setSelectedSizes((prev) =>
-      checked ? [...prev, value] : prev.filter((size) => size !== value)
+      checked ? [...prev, value] : prev.filter((size) => size !== value),
     );
   };
 
@@ -42,11 +42,11 @@ const Products = () => {
 
   useEffect(() => {
     fetchProducts(
-      "http://localhost:8080/api/products",
+      "https://nexa-nqve.onrender.com/api/products",
       sortOption,
       audience,
       category,
-      selectedSizes
+      selectedSizes,
     );
 
     if (category?.includes("Shoes")) {

@@ -19,11 +19,11 @@ const FilterSlider = () => {
     resetFilters();
 
     fetchProducts(
-      "http://localhost:8080/api/products",
+      "https://nexa-nqve.onrender.com/api/products",
       sortOption,
       audience,
       category,
-      selectedSizes
+      selectedSizes,
     );
   };
   return (

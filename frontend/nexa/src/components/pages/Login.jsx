@@ -27,13 +27,13 @@ const Login = () => {
       if (isCreateAccount) {
         // Register api call
         const response = await axios.post(
-          "http://localhost:8080/api/register",
+          "https://nexa-nqve.onrender.com/api/register",
           {
             name,
             email,
             password,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
         if (response.status === 201) {
           navigate("/");
@@ -44,12 +44,12 @@ const Login = () => {
       } else {
         // Login api call
         const response = await axios.post(
-          "http://localhost:8080/api/login",
+          "https://nexa-nqve.onrender.com/api/login",
           {
             email,
             password,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         if (response.status === 200) {
@@ -74,7 +74,9 @@ const Login = () => {
     axios.defaults.withCredentials = true;
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/logout");
+      const response = await axios.post(
+        "https://nexa-nqve.onrender.com/api/logout",
+      );
 
       if (response.status === 200) {
         setIsLoggedIn(false);
@@ -104,8 +106,8 @@ const Login = () => {
               {isLoggedIn
                 ? "Logout?"
                 : isCreateAccount
-                ? "Create Account"
-                : "Login"}
+                  ? "Create Account"
+                  : "Login"}
             </motion.h2>
           </AnimatePresence>
 

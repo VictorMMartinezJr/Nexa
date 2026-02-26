@@ -36,7 +36,7 @@ const Product = () => {
 
     // Add item to cart
     try {
-      const response = await axios.post("http://localhost:8080/api/cart/add", {
+      const response = await axios.post("https://nexa-nqve.onrender.com/api/cart/add", {
         productId,
         quantity,
       });
@@ -55,7 +55,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const response = await axios.get(
-        `http://localhost:8080/api/product/${id}`
+        `https://nexa-nqve.onrender.com/api/product/${id}`
       );
       const data = response.data;
       setProduct(data);

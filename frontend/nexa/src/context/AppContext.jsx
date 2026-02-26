@@ -24,7 +24,7 @@ export const AppContextProvider = (props) => {
     sortOption,
     audience,
     category,
-    selectedSizes
+    selectedSizes,
   ) => {
     try {
       const response = await axios.get(url, {
@@ -43,7 +43,9 @@ export const AppContextProvider = (props) => {
 
   const getUserAccount = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/account");
+      const response = await axios.get(
+        "https://nexa-nqve.onrender.com/api/account",
+      );
 
       if (response.status === 200) {
         setUserData(response.data);
@@ -59,7 +61,7 @@ export const AppContextProvider = (props) => {
   const getAuthStatus = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/is-authenticated"
+        "https://nexa-nqve.onrender.com/api/is-authenticated",
       );
 
       if (response.status === 200 && response.data == true) {
@@ -89,7 +91,9 @@ export const AppContextProvider = (props) => {
     axios.defaults.withCredentials = true;
 
     try {
-      const response = await axios.get("http://localhost:8080/api/cart");
+      const response = await axios.get(
+        "https://nexa-nqve.onrender.com/api/cart",
+      );
 
       if (response.status === 200) {
         const cartData = response.data;

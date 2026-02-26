@@ -19,10 +19,13 @@ const CartItem = ({
 
   const handleIncrementQty = async (productId, quantity) => {
     try {
-      const response = await axios.post("http://localhost:8080/api/cart/add", {
-        productId,
-        quantity,
-      });
+      const response = await axios.post(
+        "https://nexa-nqve.onrender.com/api/cart/add",
+        {
+          productId,
+          quantity,
+        },
+      );
 
       if (response.status === 200) {
         toast.success("Item quantity updated.");
@@ -36,7 +39,7 @@ const CartItem = ({
   const handleRemoveItem = async (productId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/cart/remove/${productId}`
+        `https://nexa-nqve.onrender.com/api/cart/remove/${productId}`,
       );
       if (response.status === 200) {
         toast.success("Item removed from cart.");
