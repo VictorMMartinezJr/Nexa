@@ -12,7 +12,7 @@ const SearchbarContainer = ({ state, setState }) => {
   const handleChange = async (value) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/products/search?keyword=${value}`
+        `https://nexa-nqve.onrender.com/api/products/search?keyword=${value}`,
       );
       const data = response.data;
       setSearchedProducts(data);
