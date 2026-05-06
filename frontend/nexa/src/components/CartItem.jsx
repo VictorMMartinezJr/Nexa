@@ -1,5 +1,4 @@
 import axios from "axios";
-import { removeItem } from "framer-motion";
 import { useContext } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";

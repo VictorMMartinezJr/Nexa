@@ -4,7 +4,7 @@ import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
-  const { setCategory, setAudience } = useContext(AppContext);
+  const { setCategory, setAudience } = useContext<any>(AppContext);
   const navigate = useNavigate();
 
   const handleClick = () => {
